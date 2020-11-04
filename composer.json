@@ -1,0 +1,17 @@
+{
+    "name": "golovanovya/bitarray",
+    "type": "library",
+    "description": "BitArray PHP implementation",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "golovanovya\\bitarray\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.4"
+    }
+}
