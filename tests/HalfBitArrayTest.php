@@ -43,6 +43,10 @@ class HalfBitArrayTest extends TestCase
         $bitArray->reset(0);
         $this->assertEquals($bitArray->get(0), 0);
         $this->assertEquals($bitArray->get(1), 0);
+        $bitArray->set(1);
+        $this->assertEquals($bitArray->get(1), 0);
+        $bitArray->reset(1);
+        $this->assertEquals($bitArray->get(1), 0);
     }
 
     public function testFilledArray()

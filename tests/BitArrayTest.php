@@ -3,6 +3,7 @@
 namespace tests;
 
 use golovanovya\bitarray\BitArray;
+use InvalidArgumentException;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 
@@ -62,6 +63,10 @@ class BitArrayTest extends TestCase
         unset($bitArray[0]);
         $this->assertEquals($bitArray[0], 0);
         $this->assertEquals($bitArray[1], 0);
+        $bitArray[1] = true;
+        $this->assertEquals($bitArray[1], 1);
+        $bitArray[1] = false;
+        $this->assertEquals($bitArray[1], 0);
         $this->assertEquals($bitArray->get(0), $bitArray[0]);
         $this->assertEquals($bitArray->count(), 2);
         $this->assertEquals(count($bitArray), 2);
@@ -87,5 +92,24 @@ class BitArrayTest extends TestCase
         $this->expectException(OutOfBoundsException::class);
         $bitArray = new BitArray(2);
         $bitArray->get(-1);
+    }
+
+    public function testNegativeSizeException()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new BitArray(-1);
+    }
+
+    public function testOffsetExists()
+    {
+        $bitArray = new BitArray(2);
+        $this->assertEquals(true, $bitArray->offsetExists(1));
+    }
+
+    public function testOffsetExistsException()
+    {
+        $this->expectException(OutOfBoundsException::class);
+        $bitArray = new BitArray(2);
+        $bitArray[2];
     }
 }
