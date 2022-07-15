@@ -23,7 +23,7 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
      * @param int $size size of array
      * @param int $set initialized value true = 1, false = 0
      */
-    public function __construct($size, $set = false)
+    public function __construct($size, $set = 0)
     {
         $this->setSize($size);
         $this->rewind();
@@ -34,7 +34,6 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     /**
      * Set default
      *
-     * @param int $size
      * @param int $placeholder
      */
     private function fill($placeholder)
@@ -59,6 +58,8 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
 
     /**
      * Alias for getSize() for Countable interface
+     *
+     * @return int
      */
     public function count()
     {
@@ -68,7 +69,7 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     /**
      * Array size
      *
-     * @return void
+     * @return int
      */
     public function getSize()
     {
@@ -107,12 +108,12 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     {
         return ord($this->array[$pos]);
     }
-    
+
     /**
      * Modify bit in byte
      *
-     * @param int $byte
      * @param int $pos
+     * @param int $byte
      * @return int modified byte
      */
     private function resetBit($pos, $byte)
@@ -123,8 +124,8 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     /**
      * Modify bit in byte
      *
-     * @param int $byte
      * @param int $pos
+     * @param int $byte
      * @return int
      */
     private function setBit($pos, $byte)
@@ -135,9 +136,9 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     /**
      * Get bit value from byte
      *
-     * @param int $byte
      * @param int $pos
-     * @return bool
+     * @param int $byte
+     * @return int
      */
     private function getBit($pos, $byte)
     {
@@ -161,13 +162,13 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
      * Validate key
      *
      * @param int $key
-     * @return boolean
+     * @return null
      * @throws OutOfBoundsException
      */
     protected function validateKey($key)
     {
         if (!$this->validate($key)) {
-            throw new OutOfBoundsException($key);
+            throw new OutOfBoundsException();
         }
     }
 
@@ -200,7 +201,6 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
 
     /**
      * Set value
-     * @throws OutOfBoundsException
      */
     public function offsetSet($offset, $value)
     {
@@ -319,8 +319,8 @@ class BitArray implements Iterator, Countable, JsonSerializable, ArrayAccess
     public static function fromJsonString($jsonString)
     {
         $decoded = json_decode($jsonString, true);
-        $size = $decoded['size'];
-        $array = $decoded['array'];
+        $size = $decoded['size'] ?? 0;
+        $array = $decoded['array'] ?? '';
         $bitArray = new BitArray($size);
         $bitArray->array = $array;
         return $bitArray;
