@@ -10,7 +10,7 @@ class HalfBitArray extends BitArray
     /**
      * @inheritdoc
      */
-    public function __construct($size, $set = false)
+    public function __construct(int $size, int $set = 0)
     {
         parent::__construct(ceil($size / 2), $set);
         $this->setSize($size);
@@ -18,11 +18,8 @@ class HalfBitArray extends BitArray
 
     /**
      * Is odd key
-     *
-     * @param int $key
-     * @return bool
      */
-    private function isOdd($key)
+    private function isOdd(int $key): bool
     {
         return ($key & 1) === 1;
     }
@@ -30,7 +27,7 @@ class HalfBitArray extends BitArray
     /**
      * @inheritdoc
      */
-    public function get($key)
+    public function get(int $key): int
     {
         $this->validateKey($key);
         if ($this->isOdd($key)) {
@@ -42,7 +39,7 @@ class HalfBitArray extends BitArray
     /**
      * @inheritdoc
      */
-    public function reset($key)
+    public function reset(mixed $key): void
     {
         $this->validateKey($key);
         if ($this->isOdd($key)) {
@@ -54,7 +51,7 @@ class HalfBitArray extends BitArray
     /**
      * @inheritdoc
      */
-    public function set($key)
+    public function set(int $key): void
     {
         $this->validateKey($key);
         if ($this->isOdd($key)) {
